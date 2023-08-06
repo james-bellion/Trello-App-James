@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import { useBoardStore } from "@/store/BoardStore";
 import Column from "./Column";
-import { Todo } from "@/typings";
+import { Todo  } from "@/typings";
 
 // using zustand for state management
 // remember boards have columns inside of them

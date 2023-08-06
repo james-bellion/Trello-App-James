@@ -3,7 +3,7 @@ import { useBoardStore } from "@/store/BoardStore";
 import { Todo, TypedColumn } from "@/typings";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { todo } from "node:test";
-import {
+import { 
   DraggableProvidedDragHandleProps,
   DraggableProvidedDraggableProps,
 } from "react-beautiful-dnd";
@@ -71,10 +71,10 @@ function TodoCard({
       </div>
       {/* add image here... */}
       {imageUrl && (
-        <div className= "h-full w-full rounded-b-md">
+        <div className="h-full w-full rounded-b-md">
             <Image 
              src={imageUrl}
-             alt="Taskimage"
+             alt="Task image"
              width={400}
              height={200}
              className="w-full object-contain rounded-b-md"
