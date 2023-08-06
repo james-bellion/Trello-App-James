@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import { useBoardStore } from "@/store/BoardStore";
 import Column from "./Column";
+import { Todo } from "@/typings";
 
 // using zustand for state management
 // remember boards have columns inside of them
@@ -81,7 +82,7 @@ function Board() {
     } else {
       
       //dragging  to another col
-      const finishTodos = Array.from(finishCol.todos);
+      const finishTodos = Array.from(finishCol.todos) as Todo[]; // added as Todo[]***
       finishTodos.splice(destination.index, 0, todoMoved);
 
       const newColumns = new Map(board.columns);

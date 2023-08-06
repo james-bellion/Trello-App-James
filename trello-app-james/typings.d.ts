@@ -16,7 +16,7 @@ export interface Todo {
     $createdAt: string,
     title: string,
     status: TypedColumn,
-    image?: string,
+    image?: Image,
 }
 
 export interface Image {

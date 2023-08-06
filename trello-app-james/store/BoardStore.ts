@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getTodosGroupedByColumn } from "@/utils/getTodosGroupedByColumn";
-import { Board, Column, Todo, TypedColumn } from "@/typings";
+import { Board, Column, Todo, TypedColumn, Image } from "@/typings";
 import { ID, databases, storage } from "@/appwrite";
 import uploadImage from "@/utils/uploadImage";
 
@@ -55,7 +55,7 @@ export const useBoardStore = create<BoardState>((set, get) => ({
         set({ board: { columns: newColumns } })
 
         if (todo.image) {
-            await storage.deleteFile(todo.image.bucketID, todo.image.fileId)
+            await storage.deleteFile(todo.image.bucketId, todo.image.fileId)
         } // deletes the image
 
         await databases.deleteDocument(
