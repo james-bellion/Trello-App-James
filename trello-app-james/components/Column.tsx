@@ -3,6 +3,8 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid"
 import { todo } from "node:test"
 import { Draggable, Droppable } from "react-beautiful-dnd"
 import TodoCard from "./TodoCard"
+import { useBoardStore } from "@/store/BoardStore"
+import { useModalStore } from "@/store/ModalStore"
 
 type Props = {
     id: TypedColumn,
@@ -20,6 +22,9 @@ const idToColumnText: {
 }
 
 function Column({id, todos, index}: Props) {
+
+    const [searchString] = useBoardStore((state) => [state.searchString])
+    const openModal = useModalStore((state) => state.openModal)
   return (
     <Draggable draggableId={id} index={index}>
         {(provided) => (
@@ -38,16 +43,25 @@ function Column({id, todos, index}: Props) {
                         snapshot.isDraggingOver ? "bg-green-200" : "bg-white/50 "
                       } `}  
                     >
-                        <h2 className="flex justify-between font-bold text-xl">
-                            {idToColumnText[id]}
+                        
+                        <h2 className="flex justify-between font-bold text-xl"> 
+                            {idToColumnText[id]} 
                             <span className="text-grey-500 bg-gray-200 rounded-full px-2 py-1 text-sm font-normal">
-                                {todos.length}
+                                
+                                {!searchString ? todos.length : todos.filter((todo) =>
+                                   todo.title.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())).length}
+
                             </span>
                         
                         </h2>
 
                         <div className="space-y-2">
-                            {todos.map((todo, index) => (
+                            {todos.map((todo, index) => {
+
+                                if (searchString && !todo.title.toLowerCase().includes(searchString.toLowerCase()))
+                                 return null // logic for searching 
+                            
+                            return(
                                 <Draggable
                                  key={todo.$id}
                                  draggableId={todo.$id}
@@ -64,11 +78,13 @@ function Column({id, todos, index}: Props) {
                                         />
                                     )}
                                 </Draggable>
-                            ))}
+                            )})}
                             {provided.placeholder}
 
                             <div className="flex items-end justify-end p-2">
-                                <button className="text-green-500 hover:text-green-600 ">
+                                <button 
+                                 onClick={openModal}
+                                 className="text-green-500 hover:text-green-600 ">
                                     <PlusCircleIcon 
                                      className="h-10 w-10"
                                     />

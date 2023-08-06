@@ -1,11 +1,37 @@
 "use client" // for things that cant be done on the server but has to be done on the browser
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { MagnifyingGlassIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import Avatar from "react-avatar";
+import { useBoardStore } from "@/store/BoardStore";
+import fetchSuggestion from "@/utils/fetchSuggestion";
 
 function Header() {
+
+  const [board, searchString, setSearchString] = useBoardStore((state) => [ //acess to search at a global level
+    state.board,  
+    state.searchString,
+    state.setSearchString,
+  ]) 
+
+  const [loading, setLoading] = useState<boolean>(false)
+  const [suggestion, setSuggestion] = useState<string>("") // local suggestion
+
+  useEffect(() => {
+    if (board.columns.size === 0 ) return // protecting: no fetching suggestion from gbt if board cols are 0
+    setLoading(true)
+
+  // handel the ai 
+    const fetchSuggestionFunc = async () => {
+      const suggestion = await fetchSuggestion(board)
+      setSuggestion(suggestion)
+      setLoading(false)
+    }
+
+    fetchSuggestionFunc()
+  }, [board])// dependency array using the board
+
 
 // const googleUserProfile = getGoogleUserProfile(); // Function to get the user profile data
 // const profilePictureUrl = googleUserProfile.profileObj.imageUrl;
@@ -51,6 +77,8 @@ function Header() {
               type="text"
               placeholder="Search"
               className="flex-1 outline-none p-2"
+              value={searchString}
+              onChange={(e) => setSearchString(e.target.value)}
             />
             <button type="submit" hidden></button>
           </form>
@@ -61,8 +89,12 @@ function Header() {
 
       <div className="flex py-2 items-center justify-center px-5  md:py-5">
         <p className="flex p-5 items-center text-sm font-light pr-5 shadow-xl rounded-xl w-fit bg-white italic max-w-3xl text-[#0055D1] ">
-         <UserCircleIcon className="inline-block h-10 w-10 text-[#0055D1] mr-1  " />
-            GPT is summerising your day
+         <UserCircleIcon className={`inline-block h-10 w-10 text-[#0055D1] mr-1  
+          ${loading &&  "animate-spin"}
+         `} />
+            {suggestion && !loading
+             ? suggestion
+             : "AI bot is summerising your tasks for the day..."}
         
         </p>
       </div>

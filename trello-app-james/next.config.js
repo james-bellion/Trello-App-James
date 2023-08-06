@@ -1,4 +1,10 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
+const { linkSync } = require("fs");
 
-module.exports = nextConfig
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    domains: ["cloud.appwrite.io", "links.papareact.com"],
+  },
+};
+
+module.exports = nextConfig;

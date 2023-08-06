@@ -1,17 +1,17 @@
 import { Models } from "appwrite"
 
-interface Board {
+export interface Board {
     columns: Map<TypedColumns, Column>
 }
 
-type TypedColumn = "todo" | "inprogress" | "done"
+export type TypedColumn = "todo" | "inprogress" | "done"
 
-interface Column {
+export interface Column {
     id: TypedColumns,
     todos: Todo[]
 }
 
-interface Todo {
+export interface Todo {
     $id: string,
     $createdAt: string,
     title: string,
@@ -19,7 +19,8 @@ interface Todo {
     image?: string,
 }
 
-interface Image {
+export interface Image {
     bucketId: string
     fileId: string
 }
+
