@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getTodosGroupedByColumn } from "@/utils/getTodosGroupedByColumn";
-import { Board, Column, Todo, TypedColumn, Image } from "@/typings";
+import { Board, ColumnType, Todo, TypedColumn, Image } from "@/typings";
 import { ID, databases, storage } from "@/appwrite";
 import uploadImage from "@/utils/uploadImage";
 
@@ -27,7 +27,7 @@ interface BoardState{
 
 export const useBoardStore = create<BoardState>((set, get) => ({
     board: {
-        columns: new Map<TypedColumn, Column>()
+        columns: new Map<TypedColumn, ColumnType>()
     },
 
     // default values

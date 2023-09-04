@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import { useBoardStore } from "@/store/BoardStore";
 import Column from "./Column";
-import { Todo  } from "@/typings";
+import { ColumnType, Todo  } from "@/typings";
 
 // using zustand for state management
 // remember boards have columns inside of them
@@ -45,12 +45,12 @@ function Board() {
     const startColIndex = columns[Number(source.droppableId)]; // the src dropable id will go into the col and get me the correct col
     const finishColIndex = columns[Number(destination.droppableId)]; // when you draged and droped in the correct way, your rebuiling from a 0 to the object in your store
 
-    const startCol: Column = {
+    const startCol: ColumnType = {
       id: startColIndex[0],
       todos: startColIndex[1].todos,
     };
 
-    const finishCol: Column = {
+    const finishCol: ColumnType = {
       id: finishColIndex[0],
       todos: finishColIndex[1].todos,
     };

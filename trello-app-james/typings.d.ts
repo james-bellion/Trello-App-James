@@ -1,13 +1,13 @@
 import { Models } from "appwrite"
 
 export interface Board {
-    columns: Map<TypedColumns, Column>
+    columns: Map<TypedColumn, Column>
 }
 
 export type TypedColumn = "todo" | "inprogress" | "done"
 
-export interface Column {
-    id: TypedColumns,
+export interface ColumnType { // changed to Column Type
+    id: TypedColumn,
     todos: Todo[]
 }
 
